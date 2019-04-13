@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head th:replace="fragment/head :: head"></head>
+<body>
+<div class="container">
+    <h2>Привет, <span sec:authentication="name">Bob</span>
+        <!--<span th:text="${#request.userPrincipal.name}"></span>-->
+    </h2>
+    <div th:replace="fragment/header:: header"></div>
+    <div th:if="${not #lists.isEmpty(users)}">
+        <div th:replace="operations/listusers :: userlist"></div>
+    </div>
+</div>
+</body>
+</html>

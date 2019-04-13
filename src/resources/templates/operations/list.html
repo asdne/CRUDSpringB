@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="personlist">
+    <table class="table table-bordered table-hover table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>INDEX</th>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>адрес</th>
+            <sec:authorize access="hasRole('ADMIN')">
+                <th>Редактировать</th>
+                <th>Удалить нафиг!</th>
+            </sec:authorize>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="person : ${persons}">
+            <td th:text="${personStat.count}"></td>
+            <td th:text="${person.surname}"></td>
+            <td th:text="${person.name}"></td>
+            <td>
+                <pre th:text="${person.address}"></pre>
+            </td>
+            <sec:authorize access="hasRole('ADMIN')">
+                <td><a th:href="@{'/edit/{id}'(id=${person.id})}">ага</a></td>
+                <td><a th:href="@{'/del/{id}'(id=${person.id})}">ага</a></td>
+            </sec:authorize>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</html>

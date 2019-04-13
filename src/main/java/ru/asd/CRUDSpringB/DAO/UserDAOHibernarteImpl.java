@@ -38,7 +38,7 @@ public class UserDAOHibernarteImpl implements UserDAO, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        System.out.println("Getting access details from employee dao !!");
+        System.out.println("Getting access details from User dao !!");
         User testUser = getUserByLogin(login);
         if (testUser != null) {
 

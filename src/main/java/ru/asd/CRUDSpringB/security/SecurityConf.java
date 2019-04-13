@@ -41,9 +41,12 @@ auth
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/css/**").permitAll()
+                .antMatchers("/js/**").permitAll()
                 .antMatchers("/edit").access("hasRole('ADMIN')")
                 .antMatchers("/new").access("hasRole('ADMIN')")
                 .antMatchers("/**").access("hasAnyRole('USER','ADMIN')")
+
 
                 .anyRequest().authenticated()
                 .and();
@@ -55,7 +58,9 @@ auth
                 .loginPage("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .successForwardUrl("/")
+                .failureUrl("/login-error")
+                .defaultSuccessUrl("/userlist")
+               // .successForwardUrl("/userlist")
                 .permitAll();
     }
 

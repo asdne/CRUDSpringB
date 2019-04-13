@@ -10,7 +10,7 @@ import static java.lang.Math.toIntExact;
 public class Person {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "person_seq")
     private Long id;
 
     @Column(name = "surname", length = 25, nullable = false)

@@ -64,7 +64,7 @@ public class UserServiceIml implements UserService {
     @Override
     public User getUserByLogin(String login) {
         userRoleDAO.createRoleIfNotFound("ROLE_ADMIN");
-        UserRole ur = userRoleDAO.getRolebyId(2L);
+        UserRole ur = userRoleDAO.getRoleByName("ROLE_ADMIN");
         Set<UserRole> urs = new HashSet<>();
         urs.add(ur);
         userDAO.createUserIfNotFound("admin", "password", urs);

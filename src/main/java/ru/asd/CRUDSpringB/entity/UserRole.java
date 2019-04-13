@@ -14,7 +14,6 @@ public class UserRole implements GrantedAuthority {
     @GeneratedValue(generator = "roleseq")
     private Long id;
 
-    @NaturalId
     @Column(name = "name")
     private String role;
 
@@ -50,6 +49,20 @@ public class UserRole implements GrantedAuthority {
     }
 
     public UserRole() {
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean result=false;
+        if (obj == null || obj.getClass() != getClass()) {
+            result = false;
+        } else {
+            UserRole userRole = (UserRole) obj;
+            if (this.role == userRole.getRole()) {
+                result = true;
+            }
+        }
+        return result;
     }
 
     @Override

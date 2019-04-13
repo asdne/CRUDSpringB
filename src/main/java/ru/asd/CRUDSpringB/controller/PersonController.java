@@ -6,8 +6,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.asd.CRUDSpringB.DAO.UserRoleDAO;
 import ru.asd.CRUDSpringB.entity.Person;
 import ru.asd.CRUDSpringB.entity.User;
+import ru.asd.CRUDSpringB.entity.UserRole;
 import ru.asd.CRUDSpringB.service.PersonService;
 import ru.asd.CRUDSpringB.service.UserService;
 
@@ -15,6 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 @Controller
 
@@ -49,7 +52,9 @@ public class PersonController {
         List<Person> persons = personService.getAll();
 
         model.addAttribute("persons", persons);
-
+        for (Person p : persons) {
+            System.out.println(p);
+        }
         return "index1";
     }
 
@@ -97,7 +102,13 @@ public class PersonController {
         return "/login";
     }
 
-    @RequestMapping(value = "/userlist", method = RequestMethod.GET)
+    @RequestMapping("/login-error")
+    public String loginError(ModelMap model) {
+        model.addAttribute("loginError", true);
+        return "/login";
+    }
+
+    @RequestMapping(value = "/userlist")
     public String listUsers(ModelMap model) {
         List<User> users = userService.getAll();
 
@@ -115,7 +126,7 @@ public class PersonController {
         return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
     }*/
 
-    @RequestMapping(value = "/newuser",method = RequestMethod.POST)
+    @RequestMapping(value = "/newuser", method = RequestMethod.POST)
     public String newUserSave(@RequestParam(name = "login") String login, @RequestParam(name = "password") String password, @RequestParam(name = "role[]") List<String> role) {
         System.out.println("New User");
         if (login != null) {
@@ -132,10 +143,11 @@ public class PersonController {
         return "redirect:userlist";
     }
 
-    @RequestMapping(value = "/newuser",method = RequestMethod.GET)
-    public String newUserForm(){
+    @RequestMapping(value = "/newuser", method = RequestMethod.GET)
+    public String newUserForm() {
         return "newUser";
     }
+
     @RequestMapping(value = "/deluser", method = RequestMethod.GET)
     public String dUser(@RequestParam Map<String, String> allRequestParams, ModelMap model) {
         userService.deleteUserById(Long.parseLong(allRequestParams.get("id")));
@@ -146,12 +158,20 @@ public class PersonController {
     public String editUser(@RequestParam Map<String, String> allRequestParams, ModelMap model) {
         System.out.println("EditUserPage");
         User user = userService.getUserById(Long.parseLong(allRequestParams.get("id")));
+        boolean userrole=false,adminrole=false;
+        for (UserRole role : user.getRoles()
+        ) {
+            if (role.getRole().equals("ROLE_USER")) userrole=true;
+            if (role.getRole().equals("ROLE_ADMIN")) adminrole=true;
+        }
+        model.addAttribute("userrole", userrole);
+        model.addAttribute("adminrole", adminrole);
         model.addAttribute("user", user);
         return "editUser";
     }
 
     @RequestMapping(value = "/edituser", method = RequestMethod.POST)
-    public String esUser(@RequestParam(name = "id") Long id,@RequestParam(name = "login") String login, @RequestParam(name = "password") String password, @RequestParam(name = "role[]") List<String> role, ModelMap model) {
+    public String esUser(@RequestParam(name = "id") Long id, @RequestParam(name = "login") String login, @RequestParam(name = "password") String password, @RequestParam(name = "role[]") List<String> role, ModelMap model) {
 
         User updateUser = new User(login, password);
         Set<String> roles = new HashSet<>();
@@ -160,7 +180,7 @@ public class PersonController {
             roles.add(r);
         }
         updateUser.setId(id);
-        userService.updateUser(updateUser,roles);
+        userService.updateUser(updateUser, roles);
         return "redirect:/userlist";
     }
 

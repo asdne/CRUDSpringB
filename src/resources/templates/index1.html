@@ -1,0 +1,16 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/head :: head"></head>
+<body>
+<div class="container">
+
+
+    <h2>Привет </h2>
+    <div th:replace="fragment/header:: header"></div>
+    <div th:if="${not #lists.isEmpty(persons)}">
+        <div th:replace="operations/list :: personlist"></div>
+    </div>
+    <div replace="fragments/footer :: footer"></div>
+</div>
+</body>
+</html>

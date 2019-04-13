@@ -9,6 +9,7 @@ import java.util.Set;
 @Service
 public interface UserService {
     User getUserByLogin(String login);
+
     List<User> getAll();
 
     void deleteUserById(Long id);
@@ -17,5 +18,5 @@ public interface UserService {
 
     User getUserById(Long id);
 
-    User updateUser(User user,Set<String> roles);
+    User updateUser(User user, Set<String> roles);
 }

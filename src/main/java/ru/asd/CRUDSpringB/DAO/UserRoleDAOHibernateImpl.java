@@ -29,7 +29,7 @@ public class UserRoleDAOHibernateImpl implements UserRoleDAO{
         return role.get(0);
     }
 
-    public final UserRole createRoleIfNotFound(final String name) {
+    public UserRole createRoleIfNotFound(String name) {
 
         Query query = eMrF.createQuery("from UserRole where name=:n");
         query.setParameter("n",name);
