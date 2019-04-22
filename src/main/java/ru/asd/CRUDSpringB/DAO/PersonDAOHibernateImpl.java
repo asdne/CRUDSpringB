@@ -43,8 +43,7 @@ public class PersonDAOHibernateImpl implements PersonDAO {
 
     @Override
     public Person getPersonById(Long id) {
-        Person person = eMrF.find(Person.class, id);
-        return person;
+        return eMrF.find(Person.class, id);
         // return (Person) eMrF.createQuery("from Person as p where p.id=:id").setParameter("id", id).getSingleResult();
     }
 }

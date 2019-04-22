@@ -3,13 +3,83 @@
 
 <head th:replace="fragment/head :: head"></head>
 <body>
-<div class="container">
-    <h2>Привет, <span sec:authentication="name">Bob</span>
-        <!--<span th:text="${#request.userPrincipal.name}"></span>-->
-    </h2>
-    <div th:replace="fragment/header:: header"></div>
-    <div th:if="${not #lists.isEmpty(users)}">
-        <div th:replace="operations/listusers :: userlist"></div>
+<div th:replace="fragment/header:: header"></div>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 sidemymenu">
+            <div class="list-group" id="list-tab1" role="tablist">
+                <a class="list-group-item list-group-item-action active" id="adminpart" data-toggle="list"
+                   href="#admin-part" role="tab" aria-controls="adminpart">Admin</a>
+                <a class="list-group-item list-group-item-action" id="userpart" data-toggle="list"
+                   href="#user-part" role="tab" aria-controls="userpart">User</a>
+            </div>
+        </nav>
+        <main role="main" class="col-md-9 ">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="admin-part" role="tabpanel"
+                     aria-labelledby="admin-part">
+                    <h1>Admin panel</h1>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="list-group list-group-horizontal" id="list-tab" role="tablist">
+                                <a class="list-group-item  list-group-item-light list-group-item-action active" id="list-user-list"
+                                   data-toggle="list" href="#list-users" role="tab" aria-controls="userlist">User
+                                    List</a>
+                                <a class="list-group-item  list-group-item-light list-group-item-action" id="newuser" data-toggle="list"
+                                   href="#new" role="tab" aria-controls="newuser">New User</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="list-users" role="tabpanel"
+                                     aria-labelledby="list-user-list">
+                                    <div th:if="${not #lists.isEmpty(users)}">
+                                        <div th:replace="operations/listusers :: userlist"></div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="new" role="tabpanel" aria-labelledby="newuser">
+                                    <form action="/newuser" method="post">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Login</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" name="login" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Пароль</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" name="password" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Роли</label>
+                                            <div class="col-sm-10">
+                                                <select size="2" multiple name="role[]">
+                                                    <option selected value="ROLE_USER">пользователь</option>
+                                                    <option value="ROLE_ADMIN">админ!</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade " id="user-part" role="tabpanel">
+                    <h2>Привет, <span sec:authentication="name">Bob</span>
+                        <!--<span th:text="${#request.userPrincipal.name}"></span>-->
+                    </h2>
+                </div>
+            </div>
+
+        </main>
     </div>
 </div>
 </body>

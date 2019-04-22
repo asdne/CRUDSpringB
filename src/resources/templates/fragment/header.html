@@ -6,7 +6,10 @@
 </head>
 <body>
 <div th:fragment="header">
-    <a class="btn btn-primary" th:href="@{/logout}" role="button"><i class="fas fa-running"></i> Бежим отсюда!</a>
+    <nav class="navbar navbar-dark bg-dark navbar-fixed-top">
+                <a class="navbar-brand" th:href="@{/}">CRUDSpringB</a>
+                <a class="btn btn-primary" th:href="@{/logout}" role="button"><i class="fas fa-running"></i> Бежим отсюда!</a>
+    </nav>
 </div>
 </body>
 </html>

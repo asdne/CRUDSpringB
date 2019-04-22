@@ -44,6 +44,7 @@ auth
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/edit").access("hasRole('ADMIN')")
+                .antMatchers("/userlist").access("hasRole('ADMIN')")
                 .antMatchers("/new").access("hasRole('ADMIN')")
                 .antMatchers("/**").access("hasAnyRole('USER','ADMIN')")
 

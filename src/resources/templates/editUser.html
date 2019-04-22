@@ -5,7 +5,8 @@
 <body>
 <div class="container">
     <h2>Редактируем пользователя</h2>
-    <form action="" method="post">
+    <form action="/edituser" method="post">
+        <input type="hidden" name="id" th:value="${user.id}">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Login</label>
             <div class="col-sm-10">
